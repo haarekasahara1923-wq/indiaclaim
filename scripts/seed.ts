@@ -20,7 +20,7 @@ async function seed() {
   try {
     // ── 1. Admin User ──────────────────────────────────────────────────────────
     console.log("Creating default admin user...");
-    const hashedPassword = await bcrypt.hash("IndiaClAim@2024", 10);
+    const hashedPassword = await bcrypt.hash("indiaclaim@123", 10);
     const existingAdmins = await db.select().from(schema.admins).limit(1);
 
     if (existingAdmins.length === 0) {

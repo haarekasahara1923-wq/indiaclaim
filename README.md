@@ -102,7 +102,7 @@ npm run db:seed
 
 Default Admin Credentials:
 - **Email**: `admin@indiaclaim.com`
-- **Password**: `IndiaClAim@2024`
+- **Password**: `indiaclaim@123`
 
 ### 5. Start Development Server
 ```bash
