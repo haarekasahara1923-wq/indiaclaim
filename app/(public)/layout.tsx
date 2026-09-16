@@ -3,6 +3,7 @@ import Navbar from "@/components/public/Navbar";
 import Footer from "@/components/public/Footer";
 import TrustBadge from "@/components/public/TrustBadge";
 import WhatsAppWidget from "@/components/public/WhatsAppWidget";
+import BottomNav from "@/components/public/BottomNav";
 import { getSiteSettings } from "@/actions/settings";
 
 export default async function PublicLayout({
@@ -24,9 +25,10 @@ export default async function PublicLayout({
         siteTitle={siteTitle}
       />
       <TrustBadge />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pb-20 lg:pb-0">{children}</main>
       <Footer siteSettings={settings} />
       <WhatsAppWidget />
+      <BottomNav whatsappNumber={whatsappNumber} phone={phone} />
     </div>
   );
 }

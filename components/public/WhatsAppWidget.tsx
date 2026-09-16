@@ -89,7 +89,7 @@ export default function WhatsAppWidget() {
   return (
     <>
       {/* Floating Action Button */}
-      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+      <div className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-40 flex items-center gap-3">
         {/* Helper tooltip badge on desktop */}
         {!isOpen && (
           <div className="hidden sm:flex items-center bg-white border border-emerald-200 text-slate-800 text-xs font-semibold py-1.5 px-3 rounded-full shadow-lg animate-bounce">
@@ -102,13 +102,13 @@ export default function WhatsAppWidget() {
           type="button"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Open WhatsApp Claim Consultation"
-          className="relative group bg-emerald-500 hover:bg-emerald-600 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center ring-4 ring-emerald-400/30"
+          className="relative group bg-emerald-500 hover:bg-emerald-600 text-white p-3.5 sm:p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center ring-4 ring-emerald-400/30"
         >
           {isOpen ? (
-            <X className="w-7 h-7" />
+            <X className="w-6 h-6 sm:w-7 sm:h-7" />
           ) : (
             <svg
-              className="w-7 h-7 fill-current"
+              className="w-6 h-6 sm:w-7 sm:h-7 fill-current"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -120,7 +120,7 @@ export default function WhatsAppWidget() {
 
       {/* Modal Popup */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:justify-end sm:pr-6 sm:pb-24 p-4 bg-black/40 backdrop-blur-xs">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:justify-end sm:pr-6 pb-20 sm:pb-24 p-3 sm:p-4 bg-black/50 backdrop-blur-xs">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-200">
             {/* Header */}
             <div className="bg-gradient-to-r from-emerald-600 to-teal-700 text-white p-4 sm:p-5">

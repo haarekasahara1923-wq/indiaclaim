@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -12,6 +12,14 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+  themeColor: "#0f172a",
+};
 
 export const metadata: Metadata = {
   title: {
@@ -37,6 +45,14 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXTAUTH_URL || "https://www.indiaclaim.com"
   ),
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "India Claim",
+  },
+  formatDetection: {
+    telephone: true,
+  },
   openGraph: {
     title: "India Claim — Insurance Claim & Legal Law Adviser",
     description:
