@@ -21,7 +21,7 @@ export default function AdminAboutPage() {
 
   // State
   const [founderName, setFounderName] = useState("Devesh Sharma");
-  const [founderDesignation, setFounderDesignation] = useState("Co-Founder, India Claim");
+  const [founderDesignation, setFounderDesignation] = useState("Founder, India Claim");
   const [founderBio, setFounderBio] = useState("");
   const [founderPhotoUrl, setFounderPhotoUrl] = useState("");
   const [storyRichtext, setStoryRichtext] = useState("");
@@ -34,7 +34,7 @@ export default function AdminAboutPage() {
       const data = await getAboutContent();
       if (data) {
         setFounderName(data.founderName || "Devesh Sharma");
-        setFounderDesignation(data.founderDesignation || "Co-Founder, India Claim");
+        setFounderDesignation(data.founderDesignation || "Founder, India Claim");
         setFounderBio(data.founderBio || "");
         setFounderPhotoUrl(data.founderPhotoUrl || "");
         setStoryRichtext(data.storyRichtext || "");
@@ -111,7 +111,7 @@ export default function AdminAboutPage() {
             About Us &amp; Founder Profile
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
-            Manage company story, Hindi copy, Co-Founder Devesh Sharma profile, and key advantages.
+            Manage company story, Hindi copy, Founder Devesh Sharma profile, and key advantages.
           </p>
         </div>
 
@@ -136,7 +136,7 @@ export default function AdminAboutPage() {
           <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
             <UserCheck className="w-5 h-5 text-blue-600" />
             <h2 className="text-base font-bold text-slate-900">
-              Co-Founder Information Block
+              Founder Information Block
             </h2>
           </div>
 
@@ -162,7 +162,7 @@ export default function AdminAboutPage() {
                 type="text"
                 value={founderDesignation}
                 onChange={(e) => setFounderDesignation(e.target.value)}
-                placeholder="Co-Founder, India Claim"
+                placeholder="Founder, India Claim"
                 className="w-full px-4 py-3 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
             </div>

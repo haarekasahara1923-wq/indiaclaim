@@ -10,7 +10,7 @@ Built with **Next.js 14 (App Router)**, **TypeScript**, **Neon PostgreSQL**, **D
 
 ### Public Marketing Pages
 - **Home (`/`)**: Hero section with editable headline/subheadline, stat counters, "विशेष गारंटी" (*No Win No Fee*) banner, 4 core service cards, insurance categories strip, client reviews carousel, settlement proofs preview, and emergency CTAs.
-- **About Us (`/about`)**: Company story, Co-Founder **Devesh Sharma** bio and photo, Hindi description copy, and editable "Why Choose Us" value propositions.
+- **About Us (`/about`)**: Company story, Founder **Devesh Sharma** bio and photo, Hindi description copy, and editable "Why Choose Us" value propositions.
 - **Services (`/services`)**: Full breakdown of 4 core services (*Insurance Claim, Mis-Selling, Delay in Claim Process, Claim Short Settled*) + 5 insurance categories (*Term, Health, Life, Motor, Travel*).
 - **Gallery (`/gallery`)**: Masonry grid supporting images, videos, and PDFs with filter tabs (*Photos | Videos | Documents*) and custom lightbox.
 - **Testimonials (`/testimonials`)**: Client reviews with star ratings and verified case settlement badges.
@@ -136,4 +136,4 @@ Admin login is at [http://localhost:3000/admin/login](http://localhost:3000/admi
 
 ## 📄 License
 © 2024 India Claim (indiaclaim.com). All rights reserved.
-Co-Founder: Devesh Sharma.
+Founder: Devesh Sharma.

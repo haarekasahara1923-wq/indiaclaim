@@ -135,7 +135,7 @@ export default function WhatsAppWidget() {
                     </h3>
                     <p className="text-xs text-emerald-100 flex items-center gap-1.5 mt-0.5">
                       <span className="w-2 h-2 rounded-full bg-emerald-300 inline-block animate-pulse" />
-                      Devesh Sharma (Co-Founder) Online
+                      Devesh Sharma (Founder) Online
                     </p>
                   </div>
                 </div>

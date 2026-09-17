@@ -192,7 +192,7 @@ async function seed() {
 <h3>Our Guarantee: No Win, No Fee</h3>
 <p><strong>Vishesh:</strong> Jab aapka paisa aapke khaate mein aa jaata hai, uske baad hi hum fees lete hain. (We only charge our consultation fee after your claim money is credited to your bank account.)</p>`,
         founderName: "Devesh Sharma",
-        founderDesignation: "Co-Founder, India Claim",
+        founderDesignation: "Founder, India Claim",
         founderPhotoUrl: null,
         founderBio:
           "Devesh Sharma is an experienced Insurance & Claim Expert with Legal Law Advisory background. Having witnessed countless policyholders struggle with wrongful claim denials and fraudulent agent mis-selling, he established India Claim in Gwalior to provide accessible, fear-free, and result-oriented claim recovery assistance across India.",

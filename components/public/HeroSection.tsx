@@ -121,7 +121,7 @@ export default function HeroSection({
                       How Can We Help You?
                     </h3>
                     <p className="text-xs text-slate-400">
-                      Co-Founder: Devesh Sharma
+                      Founder: Devesh Sharma
                     </p>
                   </div>
                 </div>

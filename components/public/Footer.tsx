@@ -232,7 +232,7 @@ export default function Footer({ siteSettings }: FooterProps) {
         {/* Bottom Bar */}
         <div className="mt-12 pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-300">
           <p>
-            &copy; {new Date().getFullYear()} India Claim (indiaclaim.com). All rights reserved. Co-Founder: Devesh Sharma.
+            &copy; {new Date().getFullYear()} India Claim (indiaclaim.com). All rights reserved. Founder: Devesh Sharma.
           </p>
           <div className="flex items-center gap-6">
             <Link href="/about" className="hover:text-white transition">

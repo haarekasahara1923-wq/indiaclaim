@@ -54,7 +54,7 @@ export default async function HomePage() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <div className="text-xs sm:text-sm font-semibold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-4 py-2 rounded-xl">
-              Co-Founder: <strong>Devesh Sharma</strong> — Legal Law Adviser &amp; Claim Expert
+              Founder: <strong>Devesh Sharma</strong> — Legal Law Adviser &amp; Claim Expert
             </div>
             <Link
               href="/about"
@@ -118,7 +118,7 @@ export default async function HomePage() {
                 100% Transparency &amp; Pan-India Reach
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
-                Direct WhatsApp consultation with our co-founder and legal advisers. Transparent case updates at every step.
+                Direct WhatsApp consultation with our founder and legal advisers. Transparent case updates at every step.
               </p>
             </div>
           </div>

@@ -20,7 +20,7 @@ export default async function AboutPage() {
 
   const founderName = about?.founderName || "Devesh Sharma";
   const founderDesignation =
-    about?.founderDesignation || "Co-Founder, India Claim";
+    about?.founderDesignation || "Founder, India Claim";
   const founderBio =
     about?.founderBio ||
     "With extensive experience in insurance advisory, consumer protection laws, and legal claim recovery, Devesh Sharma established India Claim in Gwalior to provide policyholders with dedicated, fearless representation against unfair claim repudiations and deceptive mis-selling across India.";
@@ -149,7 +149,7 @@ export default async function AboutPage() {
                     rel="noopener noreferrer"
                     className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-xl text-xs sm:text-sm shadow-lg transition hover:scale-105"
                   >
-                    Direct WhatsApp with Co-Founder
+                    Direct WhatsApp with Founder
                   </a>
                   <a
                     href={`tel:${phone.replace(/\s+/g, "")}`}

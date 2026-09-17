@@ -33,7 +33,7 @@ export async function updateAboutContent(data: {
           storyRichtext: data.storyRichtext || null,
           founderName: data.founderName || "Devesh Sharma",
           founderDesignation:
-            data.founderDesignation || "Co-Founder, India Claim",
+            data.founderDesignation || "Founder, India Claim",
           founderPhotoUrl: data.founderPhotoUrl || null,
           founderBio: data.founderBio || null,
           whyChooseUs: data.whyChooseUs || [],
@@ -44,7 +44,7 @@ export async function updateAboutContent(data: {
         storyRichtext: data.storyRichtext || null,
         founderName: data.founderName || "Devesh Sharma",
         founderDesignation:
-          data.founderDesignation || "Co-Founder, India Claim",
+          data.founderDesignation || "Founder, India Claim",
         founderPhotoUrl: data.founderPhotoUrl || null,
         founderBio: data.founderBio || null,
         whyChooseUs: data.whyChooseUs || [],

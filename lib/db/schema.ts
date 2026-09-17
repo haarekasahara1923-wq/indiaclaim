@@ -146,7 +146,7 @@ export const aboutContent = pgTable("about_content", {
     "Devesh Sharma"
   ),
   founderDesignation: varchar("founder_designation", { length: 255 }).default(
-    "Co-Founder, India Claim"
+    "Founder, India Claim"
   ),
   founderPhotoUrl: text("founder_photo_url"),
   founderBio: text("founder_bio").default(
