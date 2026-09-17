@@ -2,6 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { uploadToCloudinary } from "@/lib/cloudinary";
 import { auth } from "@/lib/auth";
 
+// Allow up to 100 MB uploads (PDFs, videos, high-res images)
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "100mb",
+    },
+  },
+};
+
 export async function POST(req: NextRequest) {
   try {
     // Require admin session for uploads

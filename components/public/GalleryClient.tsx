@@ -26,27 +26,6 @@ interface GalleryClientProps {
 
 const TABS = ["All", "Photos", "Videos", "Documents"];
 
-/**
- * Convert a Cloudinary PDF URL so it can be embedded inline.
- * Cloudinary delivers PDFs as attachments by default (triggers download).
- * Adding `fl_inline` makes the browser render it inline.
- * If the URL is not Cloudinary, return as-is.
- */
-function toInlinePdfUrl(url: string): string {
-  if (!url) return url;
-  try {
-    // Already has fl_inline
-    if (url.includes("fl_inline")) return url;
-
-    // Cloudinary URL pattern: /upload/... → /upload/fl_inline/...
-    if (url.includes("cloudinary.com")) {
-      return url.replace("/upload/", "/upload/fl_inline/");
-    }
-  } catch {
-    // ignore
-  }
-  return url;
-}
 
 export default function GalleryClient({ initialItems }: GalleryClientProps) {
   const [activeTab, setActiveTab] = useState("All");
@@ -236,26 +215,35 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
             {/* Modal Content */}
             <div className="flex-1 overflow-auto flex items-center justify-center bg-black min-h-[280px]">
               {selectedItem.type === "pdf" ? (
-                /* ── PDF Viewer ── */
-                <div className="w-full flex flex-col" style={{ height: "70vh" }}>
-                  {/* iframe viewer — works on desktop & most Android browsers */}
+                /* ── PDF Viewer via Google Docs Viewer (works on all devices) ── */
+                <div className="w-full flex flex-col" style={{ height: "72vh" }}>
                   <iframe
-                    src={toInlinePdfUrl(selectedItem.url)}
+                    src={`https://docs.google.com/viewer?url=${encodeURIComponent(selectedItem.url)}&embedded=true`}
                     title={selectedItem.caption || "PDF Document"}
                     className="w-full flex-1 border-0"
                     style={{ minHeight: "60vh" }}
                     allow="fullscreen"
+                    loading="lazy"
                   />
-                  {/* Fallback notice for browsers that block iframes */}
-                  <div className="bg-slate-950 text-slate-400 text-xs p-3 text-center shrink-0">
-                    PDF yahan nahi dikh raha?{" "}
+                  {/* Always-visible fallback bar */}
+                  <div className="bg-slate-950 text-slate-400 text-xs p-3 text-center flex flex-col sm:flex-row items-center justify-center gap-3 shrink-0">
+                    <span>PDF load nahi hua?</span>
+                    <a
+                      href={`https://docs.google.com/viewer?url=${encodeURIComponent(selectedItem.url)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-400 font-bold underline"
+                    >
+                      Google Docs mein kholo
+                    </a>
+                    <span className="hidden sm:inline text-slate-600">|</span>
                     <a
                       href={selectedItem.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-amber-400 font-bold underline"
                     >
-                      Yahan click karke seedha open karein
+                      Direct link kholo
                     </a>
                   </div>
                 </div>

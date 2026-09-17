@@ -14,6 +14,13 @@ const nextConfig = {
       },
     ],
   },
+
+  // Allow large file uploads (up to 100 MB) for PDF/video gallery uploads
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "100mb",
+    },
+  },
 };
 
 export default nextConfig;
