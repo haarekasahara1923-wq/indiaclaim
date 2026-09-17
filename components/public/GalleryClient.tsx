@@ -7,6 +7,7 @@ import {
   ExternalLink,
   X,
   ShieldCheck,
+  Download,
 } from "lucide-react";
 
 interface GalleryItem {
@@ -24,6 +25,28 @@ interface GalleryClientProps {
 }
 
 const TABS = ["All", "Photos", "Videos", "Documents"];
+
+/**
+ * Convert a Cloudinary PDF URL so it can be embedded inline.
+ * Cloudinary delivers PDFs as attachments by default (triggers download).
+ * Adding `fl_inline` makes the browser render it inline.
+ * If the URL is not Cloudinary, return as-is.
+ */
+function toInlinePdfUrl(url: string): string {
+  if (!url) return url;
+  try {
+    // Already has fl_inline
+    if (url.includes("fl_inline")) return url;
+
+    // Cloudinary URL pattern: /upload/... → /upload/fl_inline/...
+    if (url.includes("cloudinary.com")) {
+      return url.replace("/upload/", "/upload/fl_inline/");
+    }
+  } catch {
+    // ignore
+  }
+  return url;
+}
 
 export default function GalleryClient({ initialItems }: GalleryClientProps) {
   const [activeTab, setActiveTab] = useState("All");
@@ -81,11 +104,8 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
   });
 
   const handleOpenItem = (item: GalleryItem) => {
-    if (item.type === "pdf") {
-      window.open(item.url, "_blank", "noopener,noreferrer");
-    } else {
-      setSelectedItem(item);
-    }
+    // Always open in modal — PDF will use iframe viewer inside
+    setSelectedItem(item);
   };
 
   return (
@@ -188,32 +208,58 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
         </div>
       )}
 
-      {/* Lightbox Modal (Images & Videos) */}
+      {/* ── MODAL VIEWER (Images, Videos & PDFs) ── */}
       {selectedItem && (
         <div
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6"
           onClick={() => setSelectedItem(null)}
         >
           <div
-            className="relative max-w-4xl w-full max-h-[90vh] flex flex-col bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl"
+            className="relative w-full max-w-4xl flex flex-col bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl"
+            style={{ maxHeight: "92vh" }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="flex items-center justify-between p-4 bg-slate-950/80 border-b border-slate-800 text-white">
+            <div className="flex items-center justify-between p-4 bg-slate-950/80 border-b border-slate-800 text-white shrink-0">
               <h3 className="font-bold text-sm sm:text-base truncate pr-4">
                 {selectedItem.caption || "Settlement Proof"}
               </h3>
               <button
                 onClick={() => setSelectedItem(null)}
-                className="text-white/80 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition"
+                className="text-white/80 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition shrink-0"
+                aria-label="Close"
               >
                 <X className="w-6 h-6" />
               </button>
             </div>
 
             {/* Modal Content */}
-            <div className="flex-1 overflow-auto flex items-center justify-center p-2 bg-black min-h-[300px]">
-              {selectedItem.type === "video" ? (
+            <div className="flex-1 overflow-auto flex items-center justify-center bg-black min-h-[280px]">
+              {selectedItem.type === "pdf" ? (
+                /* ── PDF Viewer ── */
+                <div className="w-full flex flex-col" style={{ height: "70vh" }}>
+                  {/* iframe viewer — works on desktop & most Android browsers */}
+                  <iframe
+                    src={toInlinePdfUrl(selectedItem.url)}
+                    title={selectedItem.caption || "PDF Document"}
+                    className="w-full flex-1 border-0"
+                    style={{ minHeight: "60vh" }}
+                    allow="fullscreen"
+                  />
+                  {/* Fallback notice for browsers that block iframes */}
+                  <div className="bg-slate-950 text-slate-400 text-xs p-3 text-center shrink-0">
+                    PDF yahan nahi dikh raha?{" "}
+                    <a
+                      href={selectedItem.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-amber-400 font-bold underline"
+                    >
+                      Yahan click karke seedha open karein
+                    </a>
+                  </div>
+                </div>
+              ) : selectedItem.type === "video" ? (
                 <video
                   src={selectedItem.url}
                   controls
@@ -225,22 +271,34 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
                 <img
                   src={selectedItem.url}
                   alt={selectedItem.caption || "Settlement proof"}
-                  className="max-h-[70vh] w-auto max-w-full object-contain"
+                  className="max-h-[70vh] w-auto max-w-full object-contain p-2"
                 />
               )}
             </div>
 
             {/* Modal Footer */}
-            <div className="p-4 bg-slate-950/80 border-t border-slate-800 flex items-center justify-between text-xs text-slate-300">
-              <span>Category: {selectedItem.category || "General"}</span>
+            <div className="p-4 bg-slate-950/80 border-t border-slate-800 flex items-center justify-between text-xs text-slate-300 shrink-0 gap-3">
+              <span className="truncate">
+                Category: {selectedItem.category || "General"}
+              </span>
               <a
                 href={selectedItem.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1"
+                download={selectedItem.type === "pdf"}
+                className="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1 shrink-0"
               >
-                <span>Open Original File</span>
-                <ExternalLink className="w-3.5 h-3.5" />
+                {selectedItem.type === "pdf" ? (
+                  <>
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download PDF</span>
+                  </>
+                ) : (
+                  <>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>Open Original</span>
+                  </>
+                )}
               </a>
             </div>
           </div>
