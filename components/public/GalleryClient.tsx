@@ -215,35 +215,63 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
             {/* Modal Content */}
             <div className="flex-1 overflow-auto flex items-center justify-center bg-black min-h-[280px]">
               {selectedItem.type === "pdf" ? (
-                /* ── PDF Viewer via Google Docs Viewer (works on all devices) ── */
-                <div className="w-full flex flex-col" style={{ height: "72vh" }}>
+                /* ── PDF Viewer via our own proxy (no X-Frame-Options issues) ── */
+                <div className="w-full flex flex-col bg-black" style={{ height: "72vh" }}>
+                  {/* Desktop / Android: iframe renders PDF inline via proxy */}
                   <iframe
-                    src={`https://docs.google.com/viewer?url=${encodeURIComponent(selectedItem.url)}&embedded=true`}
+                    src={`/api/pdf-proxy?url=${encodeURIComponent(selectedItem.url)}`}
                     title={selectedItem.caption || "PDF Document"}
-                    className="w-full flex-1 border-0"
+                    className="w-full flex-1 border-0 hidden sm:block"
                     style={{ minHeight: "60vh" }}
                     allow="fullscreen"
                     loading="lazy"
                   />
-                  {/* Always-visible fallback bar */}
-                  <div className="bg-slate-950 text-slate-400 text-xs p-3 text-center flex flex-col sm:flex-row items-center justify-center gap-3 shrink-0">
-                    <span>PDF load nahi hua?</span>
+
+                  {/* Mobile-first CTA — shown always on small screens, fallback on large */}
+                  <div className="flex flex-col items-center justify-center gap-4 p-6 sm:hidden flex-1">
+                    <div className="w-20 h-20 rounded-2xl bg-red-500/20 flex items-center justify-center">
+                      <FileText className="w-10 h-10 text-red-400" />
+                    </div>
+                    <p className="text-white font-bold text-center text-sm">
+                      {selectedItem.caption || "PDF Document"}
+                    </p>
                     <a
-                      href={`https://docs.google.com/viewer?url=${encodeURIComponent(selectedItem.url)}`}
+                      href={`/api/pdf-proxy?url=${encodeURIComponent(selectedItem.url)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-400 font-bold underline"
+                      className="w-full text-center bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3 rounded-xl text-sm transition"
                     >
-                      Google Docs mein kholo
+                      📄 PDF Browser Mein Kholo
                     </a>
-                    <span className="hidden sm:inline text-slate-600">|</span>
+                    <a
+                      href={selectedItem.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full text-center bg-slate-700 hover:bg-slate-600 text-white font-semibold px-6 py-3 rounded-xl text-sm transition"
+                    >
+                      ⬇️ Direct Download Karein
+                    </a>
+                  </div>
+
+                  {/* Desktop fallback bar */}
+                  <div className="hidden sm:flex bg-slate-950 text-slate-400 text-xs p-3 items-center justify-center gap-3 shrink-0 flex-wrap">
+                    <span>PDF load nahi hua?</span>
+                    <a
+                      href={`/api/pdf-proxy?url=${encodeURIComponent(selectedItem.url)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-red-400 font-bold underline"
+                    >
+                      New tab mein kholo
+                    </a>
+                    <span className="text-slate-600">|</span>
                     <a
                       href={selectedItem.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-amber-400 font-bold underline"
                     >
-                      Direct link kholo
+                      Direct Cloudinary link
                     </a>
                   </div>
                 </div>
@@ -270,16 +298,17 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
                 Category: {selectedItem.category || "General"}
               </span>
               <a
-                href={selectedItem.url}
+                href={selectedItem.type === "pdf"
+                  ? `/api/pdf-proxy?url=${encodeURIComponent(selectedItem.url)}`
+                  : selectedItem.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                download={selectedItem.type === "pdf"}
                 className="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1 shrink-0"
               >
                 {selectedItem.type === "pdf" ? (
                   <>
                     <Download className="w-3.5 h-3.5" />
-                    <span>Download PDF</span>
+                    <span>Open / Download PDF</span>
                   </>
                 ) : (
                   <>
