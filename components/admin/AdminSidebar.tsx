@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
@@ -18,6 +18,8 @@ import {
   LogOut,
   ExternalLink,
   ShieldAlert,
+  Menu,
+  X,
 } from "lucide-react";
 
 const NAV_ITEMS = [
@@ -35,16 +37,31 @@ const NAV_ITEMS = [
 
 export default function AdminSidebar() {
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Close sidebar when route changes (mobile nav click)
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
+  // Close on ESC key
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, []);
 
   const handleSignOut = async () => {
     await signOut({ callbackUrl: "/admin/login" });
   };
 
-  return (
-    <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col shrink-0 border-r border-slate-800 min-h-screen">
+  const SidebarContent = () => (
+    <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col h-full border-r border-slate-800">
       {/* Brand Header */}
-      <div className="p-5 border-b border-slate-800">
-        <Link href="/admin" className="flex items-center gap-3">
+      <div className="p-5 border-b border-slate-800 flex items-center justify-between">
+        <Link href="/admin" className="flex items-center gap-3" onClick={() => setIsOpen(false)}>
           <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white">
             <ShieldAlert className="w-5 h-5 text-amber-400" />
           </div>
@@ -57,6 +74,14 @@ export default function AdminSidebar() {
             </span>
           </div>
         </Link>
+        {/* Close button — only on mobile */}
+        <button
+          className="lg:hidden text-slate-400 hover:text-white p-1 rounded-lg"
+          onClick={() => setIsOpen(false)}
+          aria-label="Close menu"
+        >
+          <X className="w-5 h-5" />
+        </button>
       </div>
 
       {/* Navigation Links */}
@@ -106,5 +131,43 @@ export default function AdminSidebar() {
         </button>
       </div>
     </aside>
+  );
+
+  return (
+    <>
+      {/* ── DESKTOP: always-visible sidebar ── */}
+      <div className="hidden lg:flex lg:flex-col lg:w-64 lg:min-h-screen lg:shrink-0">
+        <SidebarContent />
+      </div>
+
+      {/* ── MOBILE: hamburger button (shown in header via portal / passed up) ── */}
+      {/* We expose the trigger button — it lives inside layout.tsx mobile header */}
+      {/* Drawer backdrop */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+          onClick={() => setIsOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Drawer panel */}
+      <div
+        className={`fixed top-0 left-0 h-full z-50 flex flex-col transition-transform duration-300 ease-in-out lg:hidden ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <SidebarContent />
+      </div>
+
+      {/* Hamburger toggle — fixed top-left on mobile */}
+      <button
+        className="lg:hidden fixed top-3 left-3 z-50 bg-slate-900 border border-slate-700 text-white p-2 rounded-xl shadow-lg"
+        onClick={() => setIsOpen((prev) => !prev)}
+        aria-label="Toggle menu"
+      >
+        {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+      </button>
+    </>
   );
 }
