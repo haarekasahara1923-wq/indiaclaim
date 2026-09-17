@@ -48,9 +48,15 @@ export default async function HomePage() {
             <span>All in One Insurance Solution Platform</span>
           </div>
 
-          <blockquote className="text-lg sm:text-2xl font-bold leading-relaxed text-slate-100 max-w-4xl mx-auto">
-            &ldquo;India Claim se khareedi gayi har prakar ki policy par aapko claim guarantee sahayata pradan ki jaati hai. Hamare yahan sabhi prakar ke beema claim dilvaane evam aapko jhoothi jaankari dekar bechi gayi policy ka paisa vaapas karvaane se sambandhit karya kiye jaate hain.&rdquo;
+          {/* Hindi */}
+          <blockquote className="text-lg sm:text-2xl font-bold leading-relaxed text-slate-100 max-w-4xl mx-auto" lang="hi">
+            &ldquo;इंडिया क्लेम से खरीदी गई हर प्रकार की पॉलिसी पर आपको क्लेम गारंटी सहायता प्रदान की जाती है। हमारे यहाँ सभी प्रकार के बीमा क्लेम दिलवाने एवं आपको झूठी जानकारी देकर बेची गई पॉलिसी का पैसा वापस करवाने से संबंधित कार्य किए जाते हैं।&rdquo;
           </blockquote>
+
+          {/* English */}
+          <p className="text-sm sm:text-base text-slate-400 max-w-3xl mx-auto leading-relaxed">
+            &ldquo;For every type of policy purchased through India Claim, you are provided with guaranteed claim assistance. We handle all types of insurance claim settlements and also work to recover money from policies sold through false or misleading information.&rdquo;
+          </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <div className="text-xs sm:text-sm font-semibold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-4 py-2 rounded-xl">
